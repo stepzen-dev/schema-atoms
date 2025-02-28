@@ -1,0 +1,7 @@
+"""
+This is a deployable schema that only includes the delivery interfaces
+and thus it becomes automatically mocked.
+"""
+schema @sdl(files: "atoms/delivery/core/atom.graphql") {
+  query: Query
+}

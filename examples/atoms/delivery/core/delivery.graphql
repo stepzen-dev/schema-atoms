@@ -1,0 +1,21 @@
+"""
+Delivery interface.
+"""
+interface Delivery {
+  """
+  When a package is expected.
+  """
+  when: Date
+  """
+  Information about the delivery.
+  """
+  note: String
+}
+
+extend type Query {
+  # Needs one or more @supplies to return useful data.
+  """
+  delivery information.
+  """
+  expected(id: ID!): Delivery
+}
