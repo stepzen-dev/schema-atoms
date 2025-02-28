@@ -1,0 +1,39 @@
+# Note it's safe to add @mockfn to any field, they are ignored unless the type is mocked.
+
+"""
+Delivery by FastPackage.
+"""
+type FastPackage {
+  when: Date @mockfn(name: "FutureDate", values: 4)
+  note: String
+    @mockfn(
+      name: "List"
+      values: ["Out for delivery", "In transit", "label created"]
+    )
+  distance: Int @mockfn(name: "NumberRange", values: [1, 100])
+}
+
+extend type Query {
+  """
+  fp returns tracking information for FastPackage.
+  """
+  fp(id: ID!): FastPackage
+    # Simulating a call to a backend, such as a REST call.
+    @value(
+      script: {
+        src: """
+        id.startsWith('FP-') ?
+        Object (
+        {
+              when: new Date(Date.now().getTime() + (1000*60*60*24*2)).toISOString(),
+              note: `Package ${id} is expected soon`,
+              distance: 170 + (Math.random() * 40),
+          }
+          )
+          :
+            throw new Error(`Package ${id} unknown`);
+        }
+        """
+      }
+    )
+}

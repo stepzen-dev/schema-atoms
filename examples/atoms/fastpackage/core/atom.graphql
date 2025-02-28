@@ -1,0 +1,3 @@
+# atom.graphql is the reuseable atomic schema definition.
+# A deployed schema can include one or more "atoms" to produce a complete schema.
+extend schema @sdl(files: ["fast-package.graphql"])
