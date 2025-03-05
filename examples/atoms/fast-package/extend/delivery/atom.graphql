@@ -1,0 +1,5 @@
+extend schema
+  @sdl(
+    files: ["delivery.graphql"]
+    visibility: [{ expose: false, types: "Query", fields: "_.*" }]
+  )

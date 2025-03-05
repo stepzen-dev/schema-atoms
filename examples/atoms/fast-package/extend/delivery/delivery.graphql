@@ -1,0 +1,16 @@
+# This atom provides fast package extensions to the delivery atom.
+
+extend type FastPackage implements Delivery
+
+# we can't extend a field to add a new directive
+# but we can add new field that is materialized by fp
+# this is due to a restriction in GraphQL specification that
+# an object type extension's fields must not already be defined in the object type.
+# https://spec.graphql.org/October2021/#sec-Object-Extensions.Type-Validation
+
+extend type Query {
+  # using a convention of _ to indicate fields to be internal to the atom.
+  _fp(id: ID!): FastPackage
+    @supplies(query: "expected", if: { src: "id.startsWith('FP-')" })
+    @materializer(query: "fp")
+}
