@@ -24,15 +24,14 @@ extend type Query {
         src: """
         id.startsWith('FP-') ?
         Object (
-        {
-              when: new Date(Date.now().getTime() + (1000*60*60*24*2)).toISOString(),
+          {
+              when: new Date(Date.now() + (1000*60*60*24*2)).toISOString().substring(0, 10),
               note: `Package ${id} is expected soon`,
               distance: 170 + (Math.random() * 40),
           }
-          )
+        )
           :
-            throw new Error(`Package ${id} unknown`);
-        }
+            null
         """
       }
     )

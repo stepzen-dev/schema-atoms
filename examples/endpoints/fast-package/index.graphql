@@ -1,0 +1,6 @@
+"""
+This is a deployable schema that only includes the fast-package _schema atom_.
+"""
+schema @sdl(files: "atoms/fast-package/core/atom.graphql") {
+  query: Query
+}
